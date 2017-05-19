@@ -36,47 +36,23 @@ describe('interface-ipfs-core tests', () => {
 
   const dhtCommonFactory = CommonFactory.create({
     spawnOptions: {
-      initOptions: { bits: 512 },
-      EXPERIMENTAL: {
-        dht: true
-      },
       config: {
-        Bootstrap: []
-      }
+        Bootstrap: [],
+        Discovery: {
+          MDNS: {
+            Enabled: false
+          },
+          webRTCStar: {
+            Enabled: false
+          }
+        }
+      },
+      args: ['--enable-dht-experiment'],
+      initOptions: { bits: 512 }
     }
   })
 
-  tests.dht(dhtCommonFactory, {
-    skip: isNode ? [
-      // dht.provide
-      {
-        name: 'should provide local CID',
-        reason: 'FIXME: Circuit not enabled and all transports failed to dial peer'
-      },
-      {
-        name: 'should allow multiple CIDs to be passed',
-        reason: 'FIXME: Circuit not enabled and all transports failed to dial peer'
-      },
-      {
-        name: 'should provide a CIDv1',
-        reason: 'FIXME: Circuit not enabled and all transports failed to dial peer'
-      },
-      // dht.get
-      {
-        name: 'should get a value after it was put on another node',
-        reason: 'FIXME: callback is not a function'
-      },
-      // dht.findprovs
-      {
-        name: 'should provide from one node and find it through another node',
-        reason: 'FIXME: Timeout of 80000ms exceeded'
-      },
-      {
-        name: 'should return the other node in the query',
-        reason: 'FIXME: always auto-skiped from within test'
-      }
-    ] : true
-  })
+  tests.dht(dhtCommonFactory)
 
   tests.filesRegular(defaultCommonFactory, {
     skip: [{
