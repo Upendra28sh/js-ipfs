@@ -78,7 +78,6 @@ function HttpApi (repo, config, cliArgs) {
             EXPERIMENTAL: {
               pubsub: cliArgs.enablePubsubExperiment,
               ipnsPubsub: cliArgs.enableNamesysPubsub,
-              dht: cliArgs.enableDhtExperiment,
               sharding: cliArgs.enableShardingExperiment
             },
             libp2p: libp2p
